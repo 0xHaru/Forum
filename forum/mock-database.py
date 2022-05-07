@@ -16,8 +16,8 @@ __users = [
 ]
 
 __boards = [
-    Board("prog", "Programmazione")
-    Board("tech", "Tecnologia")
+    Board("prog", "Programmazione"),
+    Board("tech", "Tecnologia"),
     Board("misc", "Miscellanea")
 ]
 
