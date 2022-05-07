@@ -1,0 +1,6 @@
+black==22.3.0
+flake8==4.0.1
+Flask==2.1.2
+Flask-Login==0.6.1
+gunicorn==20.1.0
+mypy==0.950

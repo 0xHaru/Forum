@@ -1,0 +1,18 @@
+Boards:
+    - prog
+    - tech
+    - math
+    - misc
+
+Posts:
+    - Hex global ID across all boards
+    - Sorted by datetime
+    - Max 100 posts for each board
+
+Misc:
+    - Public mod log
+    - Public invites
+    - Pygments for code
+    - Latex for math + cheat sheet
+    - Archives (compressed?)
+    - Number of comments vs upvotes (?)
