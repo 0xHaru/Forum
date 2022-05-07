@@ -1,21 +1,23 @@
-from flask import Blueprint, abort  # , render_template
+from flask import Blueprint, render_template
+
+import utils
+from common import dao
 
 views = Blueprint("views", __name__)
 
 
 @views.route("/", methods=["GET"])
-def index() -> str:
-    return "index"
-    # return render_template("index.html")
+@views.route("/boards", methods=["GET"])
+def boards() -> str:
+    boards = dao.select_all_boards()
+    return render_template("boards.html", boards=boards)
 
 
 @views.route("/boards/<string:name>", methods=["GET"])
 def board(name: str) -> str:
-    if name not in ["prog", "tech", "math", "misc"]:
-        abort(404)
-
-    return "board"
-    # return render_template("board.html", board=, posts=)
+    board = dao.select_board(name)
+    utils.abort_if_falsy(board, 404)
+    return render_template("board.html", board=board)  # posts=)
 
 
 @views.route("/prog/<string:id>", methods=["GET"])
@@ -25,3 +27,10 @@ def board(name: str) -> str:
 def post(id: str) -> str:
     return "post"
     # return render_template("post.html")
+
+
+@views.route("/users/<string:username>", methods=["GET"])
+def user(username: str) -> str:
+    user = dao.select_user(username)
+    utils.abort_if_falsy(user, 404)
+    return render_template("user.html", user=user)
