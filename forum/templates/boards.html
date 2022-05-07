@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Categorie
+{% endblock %}
+
+{% block navigator %}
+<nav>
+    <a href="boards.html"><b>Categorie</b></a>
+</nav>
+{% endblock %}
+
+{% block main %}
+<h1>Lista delle categorie</h1>
+<ul>
+    {% for board in boards %}
+    <li>
+        <a href="/boards/{{board.name}}">
+            {{board.full_name}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

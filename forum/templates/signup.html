@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Registrati
+{% endblock %}
+
+{% block navigator %}
+<nav>
+    <a href="boards.html"><b>Categorie</b></a>
+</nav>
+{% endblock %}
+
+{% block main %}
+<h1>Registrati nel forum!</h1>
+<form action="/signup" method="POST">
+    <input 
+        type="text" 
+        name="username" 
+        placeholder="Username" 
+    />
+    <input 
+        type="password" 
+        name="password" 
+        placeholder="Password" 
+    />
+    <input 
+        type="password" 
+        name="confirm-password" 
+        placeholder="Conferma password" 
+    />
+    <input type="submit" value="Registrati" />
+    <p>oppure effettua il <a href="/login">login</a></p>
+</form>
+{% endblock %}

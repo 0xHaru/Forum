@@ -2,7 +2,11 @@
 <html lang="it">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <meta 
+            name="viewport" 
+            content="width=device-width, initial-scale=1.0"
+        />
 
         <link
             rel="stylesheet"
@@ -16,10 +20,32 @@
             href="{{ url_for('static', filename='icon.svg') }}"
         />
 
-        <title>Forum</title>
+        <title>
+            Forum - {% block title %}{% endblock %}
+        </title>
     </head>
 
     <body>
-        {% block content %}{% endblock %}
+        <header>
+            {% block navigator %}
+            
+            {% if username is defined %}
+            <nav>
+                <a href="/users/{{username}}">{{username}}</a>
+                <a href="/logout">Esci</a>
+            </nav>
+            {% else %}
+            <nav>
+                <a href="/login">Entra</a>
+                <a href="/signup">Iscriviti</a>
+            </nav>
+            {% endif %}
+        </header>
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+        <footer>
+            Creato da cozis ed haru :^)
+        </footer>
     </body>
 </html>
