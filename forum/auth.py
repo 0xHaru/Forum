@@ -1,5 +1,6 @@
-from flask import Blueprint, Response, flash, redirect, render_template, request
-from flask_login import login_user
+from flask import (Blueprint, Response, flash, redirect, render_template,
+                   request)
+from flask_login import login_required, login_user, logout_user
 from werkzeug.security import check_password_hash
 
 from common import dao
@@ -15,7 +16,7 @@ def login() -> str | Response:
 
         user = dao.select_user_with_pw(username)
 
-        if user:
+        if user is not None:
             if not check_password_hash(user.password, password):  # type: ignore
                 flash("Incorrect password.")
             else:
@@ -25,3 +26,10 @@ def login() -> str | Response:
             flash("Username does not exist.")
 
     return render_template("login.html")
+
+
+@auth.route("/logout", methods=["GET"])
+@login_required  # type: ignore
+def logout() -> Response:
+    logout_user()
+    return redirect("/")
