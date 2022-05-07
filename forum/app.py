@@ -2,7 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 
 from common import dao
-from model import User
+from models import User
 
 
 def create_app(config_filename: str = "config.py") -> Flask:
