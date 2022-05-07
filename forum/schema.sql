@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS User (
     username                    VARCHAR(32) PRIMARY KEY,
-    hash                        VARCHAR(32) NOT NULL,
-    salt                        VARCHAR(16) NOT NULL,
+    password                    VARCHAR(128) NOT NULL,
     email                       VARCHAR(256) UNIQUE,
     website                     VARCHAR(512)
 );
@@ -13,7 +12,7 @@ CREATE TABLE IF NOT EXISTS Board (
 );
 
 CREATE TABLE IF NOT EXISTS Post (
-    id                          INTEGER AUTOINCREMENT PRIMARY KEY,
+    id                          INTEGER PRIMARY KEY AUTOINCREMENT,
     board                       VARCHAR(4) NOT NULL,
     title                       VARCHAR(128) NOT NULL,
     body                        VARCHAR(8192) NOT NULL,
@@ -27,7 +26,7 @@ CREATE TABLE IF NOT EXISTS Post (
 );
 
 CREATE TABLE Comment (
-    id                          INTEGER AUTOINCREMENT PRIMARY KEY,
+    id                          INTEGER PRIMARY KEY AUTOINCREMENT,
     post                        INTEGER NOT NULL,
     parent                      INTEGER,
     body                        VARCHAR(4096) NOT NULL,
