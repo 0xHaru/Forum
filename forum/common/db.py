@@ -37,6 +37,10 @@ def modify_database(statement: str, args: tuple[Any, ...] = ()) -> None:
     """Executes a given SQL statement with its arguments."""
 
     connection = sqlite3.connect(current_app.config.get("DB_PATH"))  # type: ignore
+
+    # Enable foreign key constraints
+    # https://www.sqlitetutorial.net/sqlite-foreign-key/
+    connection.execute("PRAGMA foreign_keys = ON")
     cursor = connection.cursor()
 
     try:
