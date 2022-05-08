@@ -17,18 +17,19 @@ def boards() -> str:
 def board(name: str) -> str:
     board = dao.select_board(name)
     utils.abort_if_falsy(board, 404)
-
     posts = dao.select_posts(board.name, 100)
     return render_template("board.html", board=board, posts=posts)
 
 
-@views.route("/prog/<string:id>", methods=["GET"])
-@views.route("/tech/<string:id>", methods=["GET"])
-@views.route("/math/<string:id>", methods=["GET"])
-@views.route("/misc/<string:id>", methods=["GET"])
-def post(id: str) -> str:
-    return "post"
-    # return render_template("post.html")
+@views.route("/boards/<string:name>/posts/<string:id>", methods=["GET"])
+def post(name: str, id: str) -> str:
+    board = dao.select_board(name)
+    utils.abort_if_falsy(board, 404)
+
+    post = dao.select_post(int(id, base=16))
+    utils.abort_if_falsy(post, 404)
+
+    return render_template("post.html", post=post)
 
 
 @views.route("/users/<string:username>", methods=["GET"])

@@ -30,12 +30,13 @@ def select_all_boards() -> list[Board]:
 
 
 # Post
-def select_post(id: str) -> Post | None:
+def select_post(id: int) -> Post | None:
     query = "SELECT id, board, title, body, is_link, timestamp FROM Post WHERE id = ?"
     rows = db.query_database(query, (id,))
     return None if not rows else Post.from_dict(rows[0])
 
 
+# TODO: do not select the body if is_link = false
 def select_posts(board: str, limit: int) -> list[Post]:
     query = """SELECT id, board, title, body, is_link, timestamp description
                FROM Post
