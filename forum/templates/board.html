@@ -6,4 +6,14 @@
 
 {% block main %}
 <h1>/{{ board.name }}/ - {{ board.full_name }}</h1>
+
+<h1>Posts</h1>
+<ul>
+    {% for post in posts %}
+    <li>
+        {{post.title}}
+    </li>
+    {% endfor %}
+</ul>
+
 {% endblock %}

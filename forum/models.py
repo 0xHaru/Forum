@@ -28,7 +28,12 @@ class User(UserMixin):  # type: ignore
 
 
 class Board:
-    def __init__(self, name: str, full_name: str | None, description: str | None):
+    def __init__(
+        self,
+        name: str,
+        full_name: str | None,
+        description: str | None,
+    ):
         self.name = name
         self.full_name = full_name
         self.description = description
@@ -40,3 +45,32 @@ class Board:
         description = d.get("description")
 
         return Board(name, full_name, description)  # type: ignore
+
+
+class Post:
+    def __init__(
+        self,
+        id: int,
+        board: str,
+        title: str,
+        body: str,
+        is_link: bool,
+        timestamp: int,
+    ):
+        self.id = id
+        self.board = board
+        self.title = title
+        self.body = body
+        self.is_link = is_link
+        self.timestamp = timestamp
+
+    @staticmethod
+    def from_dict(d: dict[str, Any]) -> Any:
+        id = d.get("id")
+        board = d.get("board")
+        title = d.get("title")
+        body = d.get("body")
+        is_link = d.get("is_link")
+        timestamp = d.get("timestamp")
+
+        return Post(id, board, title, body, is_link, timestamp)  # type: ignore

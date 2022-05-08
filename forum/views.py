@@ -17,7 +17,9 @@ def boards() -> str:
 def board(name: str) -> str:
     board = dao.select_board(name)
     utils.abort_if_falsy(board, 404)
-    return render_template("board.html", board=board)  # posts=)
+
+    posts = dao.select_posts(board.name, 100)
+    return render_template("board.html", board=board, posts=posts)
 
 
 @views.route("/prog/<string:id>", methods=["GET"])
