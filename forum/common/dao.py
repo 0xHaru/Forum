@@ -38,7 +38,7 @@ def select_post(id: int) -> Post | None:
 
 # TODO: do not select the body if is_link = false
 def select_posts(board: str, limit: int) -> list[Post]:
-    query = """SELECT id, board, title, body, is_link, timestamp description
+    query = """SELECT id, board, title, body, is_link, timestamp
                FROM Post
                WHERE board = ?
                ORDER BY id DESC
