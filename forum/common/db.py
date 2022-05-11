@@ -4,7 +4,7 @@ from typing import Any
 from flask import current_app
 
 DBRow = dict[str, Any]
-
+DBError = sqlite3.Error
 
 # Links:
 #   - https://flask.palletsprojects.com/en/2.0.x/patterns/sqlite3/#easy-querying

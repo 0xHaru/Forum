@@ -7,9 +7,9 @@ class User(UserMixin):  # type: ignore
     def __init__(
         self,
         username: str,
-        password: str | None,
-        email: str | None,
-        website: str | None,
+        password: str | None = None,
+        email:    str | None = None,
+        website:  str | None = None,
     ):
         self.id = username
         self.username = username

@@ -24,26 +24,27 @@
             Forum - {% block title %}{% endblock %}
         </title>
     </head>
-
     <body>
         <header>
-            {% block navigator %}{% endblock %}
+{% block navigator %}{% endblock %}
             
-            {% if username is defined %}
+{% if user is defined and user.is_authenticated %}
             <nav>
-                [<a href="/users/{{username}}">{{username}}</a>|<a href="/logout">Esci</a>]
+                <a href="/users/{{username}}">{{user.username}}</a>
+                |
+                <a href="/logout">Esci</a>
             </nav>
-            {% else %}
+{% else %}
             <nav>
                 <a href="/login">Entra</a>
                 |
                 <a href="/signup">Iscriviti</a>
             </nav>
-            {% endif %}
+{% endif %}
         </header>
         <br />
         <main>
-            {% block main %}{% endblock %}
+{% block main %}{% endblock %}
         </main>
         <br />
         <footer>

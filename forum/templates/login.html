@@ -13,6 +13,17 @@
 {% block main %}
 <h1>Entra nel forum!</h1>
 <center>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+        <ul class="flashes">
+{% for message in messages %}
+            <li>{{ message }}</li>
+{% endfor %}
+        </ul>
+{% endif %}
+{% endwith %}
+    
     <form action="/login" method="POST">
         <input 
             type="text" 

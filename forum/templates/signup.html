@@ -12,6 +12,17 @@
 
 {% block main %}
 <h1>Registrati nel forum!</h1>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul class="flashes">
+{% for message in messages %}
+        <li>{{ message }}</li>
+{% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
+
 <form action="/signup" method="POST">
     <input 
         type="text" 
