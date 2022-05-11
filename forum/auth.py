@@ -1,15 +1,14 @@
-from flask import (Blueprint, Response, flash, redirect, render_template,
-                   request)
-from flask_login import login_required, login_user, logout_user, current_user
+from flask import Blueprint, Response, flash, redirect, render_template, request
+from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from common import dao
 
 auth = Blueprint("auth", __name__)
 
+
 @auth.route("/signup", methods=["GET", "POST"])
 def signup() -> str | Response:
-
     if current_user.is_authenticated:
         return redirect("/")
 
@@ -19,21 +18,19 @@ def signup() -> str | Response:
         password2 = request.form.get("confirm-password")
 
         err = None
+
         if password != password2:
-    
             err = "Password confirmation failed"
         else:
-
             hashed = generate_password_hash(password)
             user = dao.insert_user(username, hashed)
 
             if user is None:
-                
                 if dao.select_user(username) is not None:
                     err = "Username already in use"
                 else:
                     err = "Unknown failure"
-        
+
         if err is None:
             login_user(user, remember=True)
             return redirect("/")
@@ -45,7 +42,6 @@ def signup() -> str | Response:
 
 @auth.route("/login", methods=["GET", "POST"])
 def login() -> str | Response:
-
     if current_user.is_authenticated:
         return redirect("/")
 

@@ -15,13 +15,15 @@ def select_user_with_pw(username: str) -> User | None:
     rows = db.query_database(query, (username,))
     return None if not rows else User.from_dict(rows[0])
 
+
 def insert_user(username: str, password: str) -> User | None:
     stmt = "INSERT INTO User(username, password) VALUES (?, ?)"
-    try: 
-        db.modify_database(stmt, (username, password)) 
-    except db.DBError as e: 
+    try:
+        db.modify_database(stmt, (username, password))
+    except db.DBError as e:
         return None
     return User(username, password)
+
 
 # Board
 def select_board(name: str) -> Board | None:

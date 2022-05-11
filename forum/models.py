@@ -8,8 +8,8 @@ class User(UserMixin):  # type: ignore
         self,
         username: str,
         password: str | None = None,
-        email:    str | None = None,
-        website:  str | None = None,
+        email: str | None = None,
+        website: str | None = None,
     ):
         self.id = username
         self.username = username
@@ -31,8 +31,8 @@ class Board:
     def __init__(
         self,
         name: str,
-        full_name: str | None,
-        description: str | None,
+        full_name: str | None = None,
+        description: str | None = None,
     ):
         self.name = name
         self.full_name = full_name
