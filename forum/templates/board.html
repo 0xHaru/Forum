@@ -4,16 +4,28 @@
     /{{ board.name }}/
 {% endblock %}
 
+{% block navigator %}
+<nav>
+    <a href="/boards">Categorie</a>/<a href=""><b>{{ board.full_name }}</b></a>
+</nav>
+{% endblock %}
+
 {% block main %}
-<h1>/{{ board.name }}/ - {{ board.full_name }}</h1>
+{% if posts|length > 1 %}
 
-<h1>Posts</h1>
-<ul>
-    {% for post in posts %}
-    <li>
-        {{post.title}}
-    </li>
-    {% endfor %}
-</ul>
-
+<table id="board-item-table">
+{% for post in posts %}
+    <tr>
+        <td>
+            {{post.title}}
+        </td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+<center>
+    Ancora non ci sono post!
+    <pre>(╯°□°）╯︵ ┻━┻</pre>
+</center>
+{% endif %}
 {% endblock %}

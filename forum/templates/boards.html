@@ -6,19 +6,25 @@
 
 {% block navigator %}
 <nav>
-    <a href="boards.html"><b>Categorie</b></a>
+    <a href="/boards"><b>Categorie</b></a>
 </nav>
 {% endblock %}
 
 {% block main %}
-<h1>Lista delle categorie</h1>
-<ul>
-    {% for board in boards %}
-    <li>
-        <a href="/boards/{{board.name}}">
-            {{board.full_name}}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+{% if boards|length > 1 %}
+<table id="boards-table">
+{% for batch in boards|batch(2) %}
+    <tr>
+{% for board in batch %}
+        <td><a href="/boards/{{board.name}}">{{board.full_name}}</a></td>
+{% endfor %}
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+<center>
+    Non c'è nessuna categoria!!
+    <pre>(╯°□°）╯︵ ┻━┻</pre>
+</center>
+{% endif %}
 {% endblock %}

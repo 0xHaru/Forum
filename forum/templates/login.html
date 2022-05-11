@@ -6,24 +6,30 @@
 
 {% block navigator %}
 <nav>
-    <a href="boards.html"><b>Categorie</b></a>
+    <a href="/boards"><b>Categorie</b></a>
 </nav>
 {% endblock %}
 
 {% block main %}
 <h1>Entra nel forum!</h1>
-<form action="/login" method="POST">
-    <input 
-        type="text" 
-        name="username" 
-        placeholder="Username" 
-    />
-    <input 
-        type="password" 
-        name="password" 
-        placeholder="Password" 
-    />
-    <input type="submit" value="Entra" />
-    <p>oppure <a href="/signup">registrati</a></p>
-</form>
+<center>
+    <form action="/login" method="POST">
+        <input 
+            type="text" 
+            name="username" 
+            placeholder="Username" 
+        />
+        <br />
+        <br />
+        <input 
+            type="password" 
+            name="password" 
+            placeholder="Password" 
+        />
+        <br />
+        <br />
+        <input type="submit" value="Entra" />
+        <p>..oppure <a href="/signup">registrati</a></p>
+    </form>
+</center>
 {% endblock %}

@@ -31,19 +31,21 @@
             
             {% if username is defined %}
             <nav>
-                <a href="/users/{{username}}">{{username}}</a>
-                <a href="/logout">Esci</a>
+                [<a href="/users/{{username}}">{{username}}</a>|<a href="/logout">Esci</a>]
             </nav>
             {% else %}
             <nav>
                 <a href="/login">Entra</a>
+                |
                 <a href="/signup">Iscriviti</a>
             </nav>
             {% endif %}
         </header>
+        <br />
         <main>
             {% block main %}{% endblock %}
         </main>
+        <br />
         <footer>
             Creato da cozis ed haru uwu
         </footer>
