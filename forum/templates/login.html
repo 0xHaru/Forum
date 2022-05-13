@@ -1,28 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}
-    Entra
-{% endblock %}
+{% block title %}Entra{% endblock %}
 
-{% block lnav %}
-    <a href="/boards"><b>Categorie</b></a>
-{% endblock %}
+{% block lnav %}<a href="/boards">Categorie</a>{% endblock %}
 
 {% block main %}
-<h1>Entra nel forum!</h1>
 <center>
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
+    <h2>Entra!</h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
         <ul class="flashes">
-{% for message in messages %}
+            {% for message in messages %}
             <li>{{ message }}</li>
-{% endfor %}
+            {% endfor %}
         </ul>
-{% endif %}
-{% endwith %}
+        {% endif %}
+        {% endwith %}
     
-    <form action="/login" method="POST">
+    <form id="login" action="/login" method="POST">
         <input 
             type="text" 
             name="username" 
@@ -38,7 +33,6 @@
         <br />
         <br />
         <input type="submit" value="Entra" />
-        <p>..oppure <a href="/signup">registrati</a></p>
     </form>
 </center>
 {% endblock %}
