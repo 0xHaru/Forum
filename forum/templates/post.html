@@ -1,8 +1,24 @@
 {% extends "base.html" %}
 
+{% block lnav %}
+    <a href="/boards">Categorie</a>
+    /
+    <a href="/boards/{{ board.name }}">{{ board.full_name }}</a>
+    /
+    <a href="/boards/{{board.name}}/posts/{{post.id}}"><b>{{post.id}}</b></a>
+{% endblock %}
+
+{% block style %}
+main h2 {
+    margin: 0;
+}
+{% endblock %}
+
 {% block main %}
-<span> {{ post.title }} </span>
-<br><br>
+{% if post.is_link %}
+<h2><a href="{{post.body}}" target="_blank">{{post.title}}</a></h2>
+{% else %}
+<h2>{{ post.title }}</h2>
 <span> {{ post.body }} </span>
-<br><br>
+{% endif %}
 {% endblock %}

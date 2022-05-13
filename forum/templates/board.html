@@ -50,11 +50,7 @@ pre {
 
 <table>
 {% for post in posts %}
-    <tr>
-        <td>
-            {{post.title}}
-        </td>
-    </tr>
+    <tr><td><a href="/boards/{{board.name}}/posts/{{post.id}}">{{post.title}}</a></td></tr>
 {% endfor %}
 </table>
 {% else %}

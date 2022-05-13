@@ -38,7 +38,7 @@ def post(name: str, id: str) -> str:
     #   accessibile using /boards/<any-valid-board-name>/posts/0x1
     utils.abort_if_falsy(post.board == board.name, 404)
 
-    return render_template("post.html", post=post, user=current_user)
+    return render_template("post.html", board=board, post=post, user=current_user)
 
 
 @views.route("/users/<string:username>", methods=["GET"])
