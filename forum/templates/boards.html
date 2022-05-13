@@ -15,15 +15,25 @@ main table {
 
 main table td {
     width: calc(50% - 20px);
-    border: 1px solid #ccc;
+    border: 1px solid #90abbb;
     padding: 10px;
+}
+
+main table a {
+    font-size: 18px;
+}
+
+main table p {
+    margin: 10px 0 0 0;
+}
+
+.no-desc-text {
+    color: #777;
 }
 {% endblock %}
 
-{% block navigator %}
-<nav>
+{% block lnav %}
     <a href="/boards"><b>Categorie</b></a>
-</nav>
 {% endblock %}
 
 {% block main %}
@@ -32,7 +42,14 @@ main table td {
 {% for batch in boards|batch(2) %}
     <tr>
 {% for board in batch %}
-        <td><a href="/boards/{{board.name}}">{{board.full_name}}</a></td>
+        <td>
+            <a href="/boards/{{board.name}}">{{board.full_name}}</a>
+{% if board.description is none %}
+            <p class="no-desc-text">(No description)</p>
+{% else %}
+            <p>{{board.description}}</p>
+{% endif %}
+        </td>
 {% endfor %}
     </tr>
 {% endfor %}

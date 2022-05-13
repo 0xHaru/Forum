@@ -4,10 +4,8 @@
     Registrati
 {% endblock %}
 
-{% block navigator %}
-<nav>
+{% block lnav %}
     <a href="/boards"><b>Categorie</b></a>
-</nav>
 {% endblock %}
 
 {% block main %}
@@ -22,24 +20,32 @@
     </ul>
 {% endif %}
 {% endwith %}
-
-<form action="/signup" method="POST">
-    <input 
-        type="text" 
-        name="username" 
-        placeholder="Username" 
-    />
-    <input 
-        type="password" 
-        name="password" 
-        placeholder="Password" 
-    />
-    <input 
-        type="password" 
-        name="confirm-password" 
-        placeholder="Conferma password" 
-    />
-    <input type="submit" value="Registrati" />
-    <p>oppure effettua il <a href="/login">login</a></p>
-</form>
+<center>
+    <form action="/signup" method="POST">
+        <input 
+            type="text" 
+            name="username" 
+            placeholder="Username" 
+        />
+        <br />
+        <br />
+        <input 
+            type="password" 
+            name="password" 
+            placeholder="Password" 
+        />
+        <br />
+        <br />
+        <input 
+            type="password" 
+            name="confirm-password" 
+            placeholder="Conferma password" 
+        />
+        <br />
+        <br />
+        <input type="submit" value="Registrati" />
+        <br />
+        <p>oppure effettua il <a href="/login">login</a></p>
+    </form>
+</center>
 {% endblock %}

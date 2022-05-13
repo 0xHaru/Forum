@@ -12,7 +12,7 @@ main table {
     width: 100%;
 
     border-collapse: collapse;
-    border: 1px solid #ccc;
+    border: 1px solid #90abbb;
 
     background: white;
 }
@@ -31,12 +31,18 @@ pre {
 }
 {% endblock %}
 
-{% block navigator %}
-<nav>
+{% block lnav %}
     <a href="/boards">Categorie</a>
     /
     <a href="/boards/{{ board.name }}"><b>{{ board.full_name }}</b></a>
-</nav>
+{% endblock %}
+
+{% block rnav %}
+{% if user.is_authenticated %}
+    <a href="">Nuovo</a>
+    |
+{% endif %}
+    {{super()}}
 {% endblock %}
 
 {% block main %}

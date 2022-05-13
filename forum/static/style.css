@@ -41,8 +41,17 @@ header nav a:active {
 }
 
 main {
-    background: #e2eef5;
+    background: #f4f4f4;
     padding: 20px 0;
+}
+
+main {
+    width: 100%;
+}
+
+#main-inner {
+    margin: auto;
+    width: var(--page-width);
 }
 
 footer {

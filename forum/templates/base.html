@@ -21,40 +21,31 @@
         />
 
         <title>
-            Forum - {% block title %}{% endblock %}
+            Forum - {% block title %}???{% endblock %}
         </title>
 
-        <style>
-{% block style %}
-            main {
-                width: 100%;
-            }
-
-            #main-inner {
-                margin: auto;
-                width: var(--page-width);
-            }
-{% endblock %}
-        </style>
+        <style>{% block style %}{% endblock %}</style>
     </head>
     <body>
         <header>
             <br />
-{% block navigator %}{% endblock %}
-            
+            <nav>[
+{% block lnav %}{% endblock %}
+            ]</nav>
+
+            <nav>[
+{% block rnav %}
 {% if user is defined and user.is_authenticated %}
-            <nav>
                 <a href="/users/{{user.username}}">{{user.username}}</a>
                 |
                 <a href="/logout">Esci</a>
-            </nav>
 {% else %}
-            <nav>
                 <a href="/login">Entra</a>
                 |
                 <a href="/signup">Iscriviti</a>
-            </nav>
 {% endif %}
+{% endblock %}
+            ]</nav>
         </header>
         <main>
             <div id="main-inner">
