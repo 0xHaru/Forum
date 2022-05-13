@@ -1,19 +1,48 @@
 {% extends "base.html" %}
 
 {% block title %}
-    /{{ board.name }}/
+    {{ board.full_name }}
+{% endblock %}
+
+{% block style %}
+{{super()}}
+
+main table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+
+    background: white;
+}
+
+main table td {
+    padding: 5px 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+main table tr:last-child td {
+    border-bottom: 0;
+}
+
+pre {
+    margin: 0;
+}
 {% endblock %}
 
 {% block navigator %}
 <nav>
-    <a href="/boards">Categorie</a>/<a href=""><b>{{ board.full_name }}</b></a>
+    <a href="/boards">Categorie</a>
+    /
+    <a href="/boards/{{ board.name }}"><b>{{ board.full_name }}</b></a>
 </nav>
 {% endblock %}
 
 {% block main %}
 {% if posts|length > 1 %}
 
-<table id="board-item-table">
+<table>
 {% for post in posts %}
     <tr>
         <td>
@@ -25,6 +54,8 @@
 {% else %}
 <center>
     Ancora non ci sono post!
+    <br />
+    <br />
     <pre>(╯°□°）╯︵ ┻━┻</pre>
 </center>
 {% endif %}

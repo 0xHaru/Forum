@@ -3,15 +3,17 @@
 }
 
 body {
+    margin: 0;
     font-family: monospace;
 }
 
-header, main, footer {
+header, footer {
     max-width: var(--page-width);
     margin: auto;
 }
 
 header {
+    padding: 10px 0;
     overflow: auto;
 }
 
@@ -34,7 +36,13 @@ header nav a:hover {
     background: yellow;
 }
 
+header nav a:active {
+    background: #95f968;
+}
+
 main {
+    background: #e2eef5;
+    padding: 20px 0;
 }
 
 footer {
@@ -43,31 +51,4 @@ footer {
 main h1 {
     text-align: center;
     font-size: 26px;
-}
-
-#board-item-table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #ccc;
-}
-
-#board-item-table td {
-    padding: 5px 10px;
-    background: #eee;
-    border-bottom: 1px solid #ccc;
-}
-
-#board-item-table tr:last-child td {
-    border-bottom: 0;
-}
-
-#boards-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-#boards-table td {
-    width: calc(50% - 20px);
-    padding: 10px;
-    border: 1px solid #ccc;
 }

@@ -4,6 +4,22 @@
     Categorie
 {% endblock %}
 
+{% block style %}
+{{super()}}
+
+main table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+}
+
+main table td {
+    width: calc(50% - 20px);
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+{% endblock %}
+
 {% block navigator %}
 <nav>
     <a href="/boards"><b>Categorie</b></a>
@@ -12,7 +28,7 @@
 
 {% block main %}
 {% if boards|length > 1 %}
-<table id="boards-table">
+<table>
 {% for batch in boards|batch(2) %}
     <tr>
 {% for board in batch %}

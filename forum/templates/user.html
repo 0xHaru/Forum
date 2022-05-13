@@ -4,16 +4,32 @@
     {{ user.username }}
 {% endblock %}
 
+{% block style %}
+{{super()}}
+
+pre {
+    color: #777;
+    margin: 0;
+    line-height: 160%;
+}
+
+pre span {
+    color: #000;
+}
+{% endblock %}
+
+{% block navigator %}
+<nav>
+    <a href="/boards">Categorie</a>
+</nav>
+{% endblock %}
+
 {% block main %}
-<ul>
-    <li>
-        Username: {{ user.username }}
-    </li>
-    <li>
-        Email: {{ user.email }}
-    </li>
-    <li>
-        Website: {{ user.website }}
-    </li>
-</ul>
+<pre>
+    {
+        <span>Username</span>: <span>{{user.username}}</span>,
+          <span>E-Mail</span>: <span>{{user.email}}</span>,
+         <span>Website</span>: <span>{{user.website}}</span>
+    }
+</pre>
 {% endblock %}

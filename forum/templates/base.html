@@ -23,14 +23,28 @@
         <title>
             Forum - {% block title %}{% endblock %}
         </title>
+
+        <style>
+{% block style %}
+            main {
+                width: 100%;
+            }
+
+            #main-inner {
+                margin: auto;
+                width: var(--page-width);
+            }
+{% endblock %}
+        </style>
     </head>
     <body>
         <header>
+            <br />
 {% block navigator %}{% endblock %}
             
 {% if user is defined and user.is_authenticated %}
             <nav>
-                <a href="/users/{{username}}">{{user.username}}</a>
+                <a href="/users/{{user.username}}">{{user.username}}</a>
                 |
                 <a href="/logout">Esci</a>
             </nav>
@@ -42,9 +56,10 @@
             </nav>
 {% endif %}
         </header>
-        <br />
         <main>
+            <div id="main-inner">
 {% block main %}{% endblock %}
+            </div>
         </main>
         <br />
         <footer>
