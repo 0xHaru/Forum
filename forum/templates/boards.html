@@ -14,9 +14,18 @@ main table {
 }
 
 main table td {
-    width: calc(50% - 20px);
-    border: 1px solid #90abbb;
+    width: 100vw;
+    border-top: 3px solid #f4f4f4;
+    border-left: 3px solid #f4f4f4;
     padding: 10px;
+}
+
+main table td:first-child {
+    border-left: 0;
+}
+
+main table td:first-child td {
+    border-top: 0;
 }
 
 main table a {

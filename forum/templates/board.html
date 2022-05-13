@@ -10,20 +10,33 @@
 main table {
 
     width: 100%;
-
     border-collapse: collapse;
-    border: 1px solid #90abbb;
-
     background: white;
 }
 
 main table td {
-    padding: 5px 10px;
-    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    border-bottom: 3px solid #f4f4f4;
 }
 
 main table tr:last-child td {
     border-bottom: 0;
+}
+
+main table td .title {
+    text-decoration: none;
+    font-size: 20px;
+    color: #000;
+}
+
+main table td .url {
+    font-size: 14px;
+    color: #999;
+}
+
+main table td .url-wrapper {
+    margin-top: 10px;
 }
 
 pre {
@@ -50,7 +63,17 @@ pre {
 
 <table>
 {% for post in posts %}
-    <tr><td><a href="/boards/{{board.name}}/posts/{{post.id}}">{{post.title}}</a></td></tr>
+    <tr>
+        <td>
+        <a class="title" href="/boards/{{board.name}}/posts/{{post.id}}">{{post.title}}</a>
+{% if post.is_link %}
+        <br />
+        <div class="url-wrapper">
+            <a class="url" target="_blank" href="{{post.body}}">{{post.body}}</a>
+        </div>
+{% endif %}
+        </td>
+    </tr>
 {% endfor %}
 </table>
 {% else %}
