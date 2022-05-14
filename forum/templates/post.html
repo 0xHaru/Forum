@@ -25,4 +25,5 @@ main h2 {
 <h2>{{ post.title }}</h2>
 <span> {{ post.body }} </span>
 {% endif %}
+Created by <a href="/users/{{post.creator}}">{{post.creator}}</a>
 {% endblock %}

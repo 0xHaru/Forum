@@ -46,7 +46,19 @@ def post(name: str, hex_id: str) -> str:
 
 @views.route("/boards/<string:name>/new", methods=["GET", "POST"])
 def new_post(name: str) -> str:
+
+    board = dao.select_board(name)
+    utils.abort_if_falsy(board, 404)
+
+    # Only authenticated users can see the
+    # form to create new posts and call the
+    # endpoint to submit them.
+    if not current_user.is_authenticated:
+        return redirect(f"/boards/{board}") # Redirect or a simple 403?
+
     if request.method == "POST":
+
+        creator = current_user.username
         title   = request.form.get("title")
         body    = request.form.get("body")
         is_link = request.form.get("is_link")
@@ -70,14 +82,11 @@ def new_post(name: str) -> str:
             else:
 
                 try:
-                    post = dao.insert_post(name, title, body, is_link)
+                    post = dao.insert_post(name, creator, title, body, is_link)
                 except:
-                    abort(500)
+                    return abort(500)
 
                 return redirect(f"/boards/{name}/posts/{hex(post.id)}")
-
-    board = dao.select_board(name)
-    utils.abort_if_falsy(board, 404)
 
     return render_template("new.html", board=board, user=current_user)
 

@@ -52,6 +52,7 @@ class Post:
         self,
         id: int,
         board: str,
+        creator: str,
         title: str,
         body: str,
         is_link: bool,
@@ -61,6 +62,7 @@ class Post:
         self.hex_id = hex(id) # This isn't strictly necessary but
                               # it's useful to cache it here.
         self.board = board
+        self.creator = creator
         self.title = title
         self.body = body
         self.is_link = is_link
@@ -70,9 +72,10 @@ class Post:
     def from_dict(d: dict[str, Any]) -> Any:
         id = d.get("id")
         board = d.get("board")
+        creator = d.get("creator")
         title = d.get("title")
         body = d.get("body")
         is_link = d.get("is_link")
         timestamp = d.get("timestamp")
 
-        return Post(id, board, title, body, is_link, timestamp)  # type: ignore
+        return Post(id, board, creator, title, body, is_link, timestamp)  # type: ignore
