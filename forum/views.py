@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, abort, flash, redirect
 from flask_login import current_user
 
 import utils
@@ -23,13 +23,17 @@ def board(name: str) -> str:
     return render_template("board.html", board=board, posts=posts, user=current_user)
 
 
-@views.route("/boards/<string:name>/posts/<string:id>", methods=["GET"])
-def post(name: str, id: str) -> str:
+@views.route("/boards/<string:name>/posts/<string:hex_id>", methods=["GET"])
+def post(name: str, hex_id: str) -> str:
     board = dao.select_board(name)
     utils.abort_if_falsy(board, 404)
 
-    # TODO: int() throws ValueError if <id> is an invalid literal
-    post = dao.select_post(int(id, base=16))
+    try:
+        id = int(hex_id, base=16)
+    except ValueError:
+        return abort(404)
+
+    post = dao.select_post(id)
     utils.abort_if_falsy(post, 404)
 
     # Example:
@@ -39,6 +43,43 @@ def post(name: str, id: str) -> str:
     utils.abort_if_falsy(post.board == board.name, 404)
 
     return render_template("post.html", board=board, post=post, user=current_user)
+
+@views.route("/boards/<string:name>/new", methods=["GET", "POST"])
+def new_post(name: str) -> str:
+    if request.method == "POST":
+        title   = request.form.get("title")
+        body    = request.form.get("body")
+        is_link = request.form.get("is_link")
+
+        # Sanitize form inputs
+
+        title   = title.strip()
+        body    =  body.strip()
+        is_link = (is_link == 'on')
+
+        if is_link and not utils.is_url_valid(body):
+            flash("Invalid link")
+        else:
+
+            # Note that is the inputs contain
+            # HTML tags that's OK. They are
+            # escaped automatically by Jinja.
+
+            if title == "" or body == "":
+                flash("No empty fields allowed")
+            else:
+
+                try:
+                    post = dao.insert_post(name, title, body, is_link)
+                except:
+                    abort(500)
+
+                return redirect(f"/boards/{name}/posts/{hex(post.id)}")
+
+    board = dao.select_board(name)
+    utils.abort_if_falsy(board, 404)
+
+    return render_template("new.html", board=board, user=current_user)
 
 
 @views.route("/users/<string:username>", methods=["GET"])

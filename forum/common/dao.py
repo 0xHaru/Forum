@@ -1,5 +1,5 @@
+from datetime import datetime
 from models import Board, Post, User
-
 from common import db
 
 
@@ -44,6 +44,24 @@ def select_post(id: int) -> Post | None:
     rows = db.query_database(query, (id,))
     return None if not rows else Post.from_dict(rows[0])
 
+def insert_post(board: str, title: str, body: str, is_link: bool) -> int:
+
+    # current date and time
+    now = datetime.now()
+
+    timestamp = datetime.timestamp(now)
+
+    stmt = """INSERT 
+              INTO Post(board, title, body, is_link, timestamp) 
+              VALUES (?, ?, ?, ?, ?)"""
+
+    ID = db.modify_database(stmt, (board, title, body, is_link, timestamp))
+
+    # Since we just inserted an INSERT statement, 
+    # we know [modify_database] returned an integer.
+    assert ID != None
+    
+    return Post(ID, board, title, body, is_link, timestamp)
 
 # TODO: do not select the body if is_link = false
 def select_posts(board: str, limit: int) -> list[Post]:

@@ -58,6 +58,8 @@ class Post:
         timestamp: int,
     ):
         self.id = id
+        self.hex_id = hex(id) # This isn't strictly necessary but
+                              # it's useful to cache it here.
         self.board = board
         self.title = title
         self.body = body

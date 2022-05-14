@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Nuovo post
+{% endblock %}
+
+{% block lnav %}
+    <a href="/boards">Categorie</a>
+    /
+    <a href="/boards/{{ board.name }}">{{ board.full_name }}</a>
+    /
+    <a href="/boards/{{board.name}}/new"><b>New</b></a>
+{% endblock %}
+
+{% block style %}
+
+main form {
+    text-align: left;
+    width: 100%;
+    overflow: auto;
+}
+
+main input[type=text],
+main textarea {
+    border: 3px solid #ccc;
+    padding: 5px 10px;
+    width: calc(100% - 26px);
+    outline: none;
+    margin: 0;
+}
+
+main input[type=text] {
+    border-bottom: 3px dashed #ccc;
+}
+
+main textarea {
+    resize: vertical;
+    min-height: 200px;
+    border-top: 3px dashed #ccc;
+    margin-top: -3px;
+}
+
+main input[type=text]:focus,
+main textarea:focus {
+    border-color: red;
+}
+
+main input[type=submit] {
+    float: right;
+}
+
+{% endblock %}
+
+{% block main %}
+<center>
+    <br />
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="flashes">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    <form action="/boards/{{board.name}}/new" method="POST">
+        <input 
+            type="text" 
+            name="title" 
+            placeholder="[Titolo]" 
+        />
+        <textarea name="body" placeholder="[Testo o link]"></textarea>
+        <br />
+        <br />
+        <input 
+            type="checkbox" 
+            name="is_link" 
+              id="is_link" 
+        />
+        <label for="is_link">
+            È un link
+        </label>
+        <input type="submit" value="Crea" />
+    </form>
+</center>
+{% endblock %}

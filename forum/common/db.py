@@ -33,8 +33,11 @@ def query_database(query: str, args: tuple[Any, ...] = ()) -> list[DBRow]:
     return rows
 
 
-def modify_database(statement: str, args: tuple[Any, ...] = ()) -> None:
-    """Executes a given SQL statement with its arguments."""
+def modify_database(statement: str, args: tuple[Any, ...] = ()) -> int | None:
+    """Executes a given SQL statement with 
+    its arguments. If the statement is an 
+    INSERT, then the ID of the inserted row
+    is returned, None otherwise."""
 
     connection = sqlite3.connect(current_app.config.get("DB_PATH"))  # type: ignore
 
@@ -51,5 +54,17 @@ def modify_database(statement: str, args: tuple[Any, ...] = ()) -> None:
         connection.close()
         raise sqlite3.Error(e)
 
+    last_row_id = cursor.lastrowid
+
     cursor.close()
     connection.close()
+
+    # If the current statement wasn't an INSERT, then
+    # [last_row_id] doesn't refer to this statement
+    # and we need to return [None].
+
+    just_exec_an_insert = statement.strip()[:6].upper() == 'INSERT' # Hacky!
+
+    if just_exec_an_insert:
+        return last_row_id
+    return None
