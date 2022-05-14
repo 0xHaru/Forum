@@ -54,9 +54,8 @@ def new_post(name: str) -> str:
     board = dao.select_board(name)
     utils.abort_if_falsy(board, 404)
 
-    # Only authenticated users can see the
-    # form to create new posts and call the
-    # endpoint to submit them.
+    # Only authenticated users can see the form to create new posts
+    # and call the endpoint to submit them.
     if not current_user.is_authenticated:
         return redirect(f"/boards/{board}")  # Redirect or a simple 403?
 
@@ -82,6 +81,39 @@ def new_post(name: str) -> str:
                 return redirect(f"/boards/{name}/posts/{hex(post.id)}")
 
     return render_template("new.html", board=board, user=current_user)
+
+
+@views.route("/boards/<string:name>/posts/<string:hex_id>/new", methods=["GET", "POST"])
+def new_comment(name: str, hex_id: str) -> str:
+    print("HERE")
+    board = dao.select_board(name)
+    utils.abort_if_falsy(board, 404)
+
+    try:
+        id = int(hex_id, base=16)
+    except ValueError:
+        return abort(404)
+
+    post = dao.select_post(id)
+    utils.abort_if_falsy(post, 404)
+
+    # Only authenticated users can see the form to create new comments
+    # and call the endpoint to submit them.
+    if not current_user.is_authenticated:
+        return redirect(f"/boards/{board}/posts/{hex_id}")  # Redirect or a simple 403?
+
+    if request.method == "POST":
+        creator = current_user.username
+        body = str(request.form.get("body")).strip()
+
+        try:
+            comment = dao.insert_comment(post.id, creator, body, None)
+        except Exception as e:  # TODO: specify exception type
+            return abort(500)
+
+        return redirect(f"/boards/{name}/posts/{hex(post.id)}")
+
+    return render_template("comment.html", board=board, post=post)
 
 
 @views.route("/users/<string:username>", methods=["GET"])

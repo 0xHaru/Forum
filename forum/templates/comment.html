@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block main %}
+<center>
+    <br />
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="flashes">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <form action="/boards/{{board.name}}/posts/{{post.id}}/new" method="POST">
+        <textarea name="body" placeholder="[Testo]"></textarea>
+        <input type="submit" value="Crea" />
+    </form>
+</center>
+{% endblock %}

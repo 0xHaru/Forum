@@ -40,12 +40,12 @@ CREATE TABLE Comment (
     timestamp                   INTEGER NOT NULL,
 
     FOREIGN KEY(post)
-        REFERENCES Post(name)
+        REFERENCES Post(id)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
 
     FOREIGN KEY(parent)
-        REFERENCES Comment(name)
+        REFERENCES Comment(id)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
 

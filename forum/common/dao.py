@@ -94,7 +94,12 @@ def select_comments(post: int) -> list[Comment]:
     return [] if not rows else [Comment.from_dict(row) for row in rows]
 
 
-def insert_comment(post: int, creator: str, body: str, parent: int) -> Comment | None:
+def insert_comment(
+    post: int,
+    creator: str,
+    body: str,
+    parent: int | None,
+) -> Comment | None:
     stmt = """INSERT
               INTO Comment(post, creator, body, timestamp, parent)
               VALUES (?, ?, ?, ?, ?)"""
