@@ -54,7 +54,7 @@ def insert_post(board: str, title: str, body: str, is_link: bool) -> int:
     stmt = """INSERT 
               INTO Post(board, title, body, is_link, timestamp) 
               VALUES (?, ?, ?, ?, ?)"""
-
+    
     ID = db.modify_database(stmt, (board, title, body, is_link, timestamp))
 
     # Since we just executed an INSERT statement, 

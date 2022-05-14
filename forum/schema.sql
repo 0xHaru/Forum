@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS Board (
 CREATE TABLE IF NOT EXISTS Post (
     id                          INTEGER PRIMARY KEY AUTOINCREMENT,
     board                       VARCHAR(4) NOT NULL,
+    creator                     VARCHAR(32) NOT NULL,
     title                       VARCHAR(128) NOT NULL,
     body                        VARCHAR(8192) NOT NULL,
     is_link                     BOOLEAN NOT NULL,
@@ -22,6 +23,11 @@ CREATE TABLE IF NOT EXISTS Post (
     FOREIGN KEY(board)
         REFERENCES Board(name)
             ON UPDATE CASCADE
+            ON DELETE CASCADE,
+
+    FOREIGN KEY(creator)
+        REFERENCES User(username)
+            ON UPDATE CASCADE
             ON DELETE CASCADE
 );
 
@@ -29,6 +35,7 @@ CREATE TABLE Comment (
     id                          INTEGER PRIMARY KEY AUTOINCREMENT,
     post                        INTEGER NOT NULL,
     parent                      INTEGER,
+    creator                     VARCHAR(32) NOT NULL,
     body                        VARCHAR(4096) NOT NULL,
     timestamp                   INTEGER NOT NULL,
 
@@ -39,6 +46,11 @@ CREATE TABLE Comment (
 
     FOREIGN KEY(parent)
         REFERENCES Comment(name)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
+
+    FOREIGN KEY(creator)
+        REFERENCES User(username)
             ON UPDATE CASCADE
             ON DELETE CASCADE
 );

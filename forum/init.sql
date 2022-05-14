@@ -32,18 +32,20 @@ VALUES("misc", "Miscellanea", NULL);
 
 -- POSTS
 
-INSERT INTO Post(board, title, body, is_link, timestamp)
+INSERT INTO Post(board, creator, title, body, is_link, timestamp)
 VALUES(
     "prog",
+    "krazam",
     "Unix command line conventions over time",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     false,
     1652028190
 );
 
-INSERT INTO Post(board, title, body, is_link, timestamp)
+INSERT INTO Post(board, creator, title, body, is_link, timestamp)
 VALUES(
     "prog",
+    "wutang",
     "Rust is hard, yes, but does it matter?",
     "https://jmmv.dev/2022/05/rust-is-hard-but-does-it-matter.html",
     true,
