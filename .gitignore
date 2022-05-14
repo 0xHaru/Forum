@@ -1,6 +1,8 @@
 # Misc
 activate
 bookmarks.txt
+*.sqlite
+forum/*.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
