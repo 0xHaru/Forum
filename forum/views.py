@@ -44,6 +44,7 @@ def post(name: str, hex_id: str) -> str:
 
     return render_template("post.html", board=board, post=post, user=current_user)
 
+
 @views.route("/boards/<string:name>/new", methods=["GET", "POST"])
 def new_post(name: str) -> str:
 
@@ -54,20 +55,20 @@ def new_post(name: str) -> str:
     # form to create new posts and call the
     # endpoint to submit them.
     if not current_user.is_authenticated:
-        return redirect(f"/boards/{board}") # Redirect or a simple 403?
+        return redirect(f"/boards/{board}")  # Redirect or a simple 403?
 
     if request.method == "POST":
 
         creator = current_user.username
-        title   = request.form.get("title")
-        body    = request.form.get("body")
+        title = request.form.get("title")
+        body = request.form.get("body")
         is_link = request.form.get("is_link")
 
         # Sanitize form inputs
 
-        title   = title.strip()
-        body    =  body.strip()
-        is_link = (is_link == 'on')
+        title = title.strip()
+        body = body.strip()
+        is_link = is_link == "on"
 
         if is_link and not utils.is_url_valid(body):
             flash("Invalid link")

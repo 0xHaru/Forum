@@ -44,6 +44,7 @@ def select_post(id: int) -> Post | None:
     rows = db.query_database(query, (id,))
     return None if not rows else Post.from_dict(rows[0])
 
+
 def insert_post(board: str, creator: str, title: str, body: str, is_link: bool) -> int:
 
     # current date and time
@@ -54,14 +55,15 @@ def insert_post(board: str, creator: str, title: str, body: str, is_link: bool) 
     stmt = """INSERT 
               INTO Post(board, creator, title, body, is_link, timestamp) 
               VALUES (?, ?, ?, ?, ?, ?)"""
-    
+
     ID = db.modify_database(stmt, (board, creator, title, body, is_link, timestamp))
 
-    # Since we just executed an INSERT statement, 
+    # Since we just executed an INSERT statement,
     # we know [modify_database] returned an integer.
     assert ID != None
 
     return Post(ID, board, creator, title, body, is_link, timestamp)
+
 
 # TODO: do not select the body if is_link = false
 def select_posts(board: str, limit: int) -> list[Post]:

@@ -34,8 +34,8 @@ def query_database(query: str, args: tuple[Any, ...] = ()) -> list[DBRow]:
 
 
 def modify_database(statement: str, args: tuple[Any, ...] = ()) -> int | None:
-    """Executes a given SQL statement with 
-    its arguments. If the statement is an 
+    """Executes a given SQL statement with
+    its arguments. If the statement is an
     INSERT, then the ID of the inserted row
     is returned, None otherwise."""
 
@@ -63,7 +63,7 @@ def modify_database(statement: str, args: tuple[Any, ...] = ()) -> int | None:
     # [last_row_id] doesn't refer to this statement
     # and we need to return [None].
 
-    just_exec_an_insert = statement.strip()[:6].upper() == 'INSERT' # Hacky!
+    just_exec_an_insert = statement.strip()[:6].upper() == "INSERT"  # Hacky!
 
     if just_exec_an_insert:
         return last_row_id
