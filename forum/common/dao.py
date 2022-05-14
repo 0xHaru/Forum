@@ -57,10 +57,10 @@ def insert_post(board: str, title: str, body: str, is_link: bool) -> int:
 
     ID = db.modify_database(stmt, (board, title, body, is_link, timestamp))
 
-    # Since we just inserted an INSERT statement, 
+    # Since we just executed an INSERT statement, 
     # we know [modify_database] returned an integer.
     assert ID != None
-    
+
     return Post(ID, board, title, body, is_link, timestamp)
 
 # TODO: do not select the body if is_link = false
