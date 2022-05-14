@@ -51,3 +51,23 @@ VALUES(
     true,
     1652028291
 );
+
+-- COMMENTS
+
+INSERT INTO Comment(post, parent, creator, body, timestamp)
+VALUES(
+    1,
+    NULL,
+    "krazam",
+    "This is a comment!",
+    1652546071
+);
+
+INSERT INTO Comment(post, parent, creator, body, timestamp)
+VALUES(
+    1,
+    1,
+    "wutang",
+    "This is a comment!",
+    1652546071
+);

@@ -1,5 +1,7 @@
 from datetime import datetime
-from models import Board, Post, User
+
+from models import Board, Comment, Post, User
+
 from common import db
 
 
@@ -45,26 +47,6 @@ def select_post(id: int) -> Post | None:
     return None if not rows else Post.from_dict(rows[0])
 
 
-def insert_post(board: str, creator: str, title: str, body: str, is_link: bool) -> int:
-
-    # current date and time
-    now = datetime.now()
-
-    timestamp = datetime.timestamp(now)
-
-    stmt = """INSERT 
-              INTO Post(board, creator, title, body, is_link, timestamp) 
-              VALUES (?, ?, ?, ?, ?, ?)"""
-
-    ID = db.modify_database(stmt, (board, creator, title, body, is_link, timestamp))
-
-    # Since we just executed an INSERT statement,
-    # we know [modify_database] returned an integer.
-    assert ID != None
-
-    return Post(ID, board, creator, title, body, is_link, timestamp)
-
-
 # TODO: do not select the body if is_link = false
 def select_posts(board: str, limit: int) -> list[Post]:
     query = """SELECT id, board, title, body, is_link, timestamp
@@ -75,3 +57,51 @@ def select_posts(board: str, limit: int) -> list[Post]:
 
     rows = db.query_database(query, (board, limit))
     return [] if not rows else [Post.from_dict(row) for row in rows]
+
+
+def insert_post(board: str, creator: str, title: str, body: str, is_link: bool) -> Post:
+    stmt = """INSERT
+              INTO Post(board, creator, title, body, is_link, timestamp)
+              VALUES (?, ?, ?, ?, ?, ?)"""
+
+    timestamp = datetime.timestamp(datetime.now())
+
+    row_id = db.modify_database(stmt, (board, creator, title, body, is_link, timestamp))
+
+    # Since we just executed an INSERT statement,
+    # we know [modify_database] returned an integer.
+    assert row_id is not None
+
+    return Post(row_id, board, creator, title, body, is_link, timestamp)
+
+
+# Comment
+def select_comment(id: int) -> Comment | None:
+    query = """SELECT id, post, creator, body, timestamp, parent
+               FROM Comment
+               WHERE id = ?"""
+
+    rows = db.query_database(query, (id,))
+    return None if not rows else Comment.from_dict(rows[0])
+
+
+def select_comments(post: int) -> list[Comment]:
+    query = """SELECT id, post, creator, body, timestamp, parent
+               FROM Comment
+               WHERE post = ?"""
+
+    rows = db.query_database(query, (post,))
+    return [] if not rows else [Comment.from_dict(row) for row in rows]
+
+
+def insert_comment(post: int, creator: str, body: str, parent: int) -> Comment | None:
+    stmt = """INSERT
+              INTO Comment(post, creator, body, timestamp, parent)
+              VALUES (?, ?, ?, ?, ?)"""
+
+    timestamp = datetime.timestamp(datetime.now())
+
+    row_id = db.modify_database(stmt, (post, creator, body, timestamp, parent))
+    assert row_id is not None
+
+    return Comment(row_id, post, creator, body, timestamp, parent)

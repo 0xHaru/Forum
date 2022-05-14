@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, abort, flash, redirect
+from flask import Blueprint, abort, flash, redirect, render_template, request
 from flask_login import current_user
 
 import utils
@@ -42,12 +42,15 @@ def post(name: str, hex_id: str) -> str:
     #   accessibile using /boards/<any-valid-board-name>/posts/0x1
     utils.abort_if_falsy(post.board == board.name, 404)
 
-    return render_template("post.html", board=board, post=post, user=current_user)
+    comments = dao.select_comments(post.id)
+
+    return render_template(
+        "post.html", board=board, post=post, user=current_user
+    )  # comments=comments
 
 
 @views.route("/boards/<string:name>/new", methods=["GET", "POST"])
 def new_post(name: str) -> str:
-
     board = dao.select_board(name)
     utils.abort_if_falsy(board, 404)
 
@@ -58,33 +61,22 @@ def new_post(name: str) -> str:
         return redirect(f"/boards/{board}")  # Redirect or a simple 403?
 
     if request.method == "POST":
-
         creator = current_user.username
-        title = request.form.get("title")
-        body = request.form.get("body")
-        is_link = request.form.get("is_link")
-
-        # Sanitize form inputs
-
-        title = title.strip()
-        body = body.strip()
-        is_link = is_link == "on"
+        title = str(request.form.get("title")).strip()
+        body = str(request.form.get("body")).strip()
+        is_link = str(request.form.get("is_link")) == "on"
 
         if is_link and not utils.is_url_valid(body):
             flash("Invalid link")
         else:
-
-            # Note that is the inputs contain
-            # HTML tags that's OK. They are
-            # escaped automatically by Jinja.
-
+            # Note that is the inputs contain HTML tags that's OK.
+            # They are escaped automatically by Jinja.
             if title == "" or body == "":
                 flash("No empty fields allowed")
             else:
-
                 try:
                     post = dao.insert_post(name, creator, title, body, is_link)
-                except:
+                except:  # TODO: specify exception type
                     return abort(500)
 
                 return redirect(f"/boards/{name}/posts/{hex(post.id)}")

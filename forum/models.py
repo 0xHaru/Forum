@@ -79,3 +79,32 @@ class Post:
         timestamp = d.get("timestamp")
 
         return Post(id, board, creator, title, body, is_link, timestamp)  # type: ignore
+
+
+class Comment:
+    def __init__(
+        self,
+        id: int,
+        post: int,
+        creator: str,
+        body: str,
+        timestamp: int,
+        parent: int | None = None,
+    ):
+        self.id = id
+        self.post = post
+        self.creator = creator
+        self.body = body
+        self.timestamp = timestamp
+        self.parent = parent
+
+    @staticmethod
+    def from_dict(d: dict[str, Any]) -> Any:
+        id = d.get("id")
+        post = d.get("post")
+        creator = d.get("creator")
+        body = d.get("body")
+        timestamp = d.get("timestamp")
+        parent = d.get("parent")
+
+        return Comment(id, post, creator, body, timestamp, parent)  # type: ignore
